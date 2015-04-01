@@ -505,15 +505,9 @@
             };
 
             var getMarkedNumber = function (key) {
-                var i, marked = 0;
-
-                var neighborKeys = getNeighborKeys(key);
-
-                for (i = 0; i < neighborKeys.length; i++) {
-                    marked += isElementMarked(neighborKeys[i]);
-                }
-
-                return marked;
+                return getNeighborKeys(key).filter(function (element) {
+                    return isElementMarked(element);
+                }).length;
             };
 
             var clearEmptyElement = function (key) {
