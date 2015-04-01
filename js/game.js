@@ -22,7 +22,8 @@
             counterElement.innerHTML = '0:00';
             try {
                 removeInterval();
-            } catch(e) {}
+            } catch (e) {
+            }
 
             elementsManager.resetElements();
 
@@ -42,7 +43,9 @@
         };
 
         var initInterval = function () {
-            interval = setInterval(function () { step(); }, 1000);
+            interval = setInterval(function () {
+                step();
+            }, 1000);
         };
 
         var removeInterval = function () {
@@ -54,7 +57,7 @@
             ++seconds;
             var time = Math.floor(seconds / 60) + ':';
             var sec = (seconds % 60);
-            time += (sec < 10)? '0' + sec : sec;
+            time += (sec < 10) ? '0' + sec : sec;
             counterElement.innerHTML = time;
         };
 
@@ -63,7 +66,7 @@
 
             var element = elementsManager.getElement(key);
 
-            if(element.getStatus() === 'new') {
+            if (element.getStatus() === 'new') {
                 element.setStatus('marked');
                 nrBombsMarked++;
             } else if (element.getStatus() === 'marked') {
@@ -85,12 +88,12 @@
 
             if (elementsManager.isElementBomb(key)) {
                 gameOver();
-                return ;
+                return;
             }
 
             element.setStatus('empty');
 
-            if(element.neighbours === 0) {
+            if (element.neighbours === 0) {
                 elementsManager.clearEmptyNeighbourElements(key);
             }
 
@@ -127,31 +130,31 @@
 
             if (e.which) {
                 // normal browser
-                if(e.which === 3) {
+                if (e.which === 3) {
                     rightClick = true;
-                } else if(e.which === 1) {
+                } else if (e.which === 1) {
                     leftClick = true;
-                } else if(e.which === 2) {
+                } else if (e.which === 2) {
                     centerClick = true;
                 }
 
 
             } else if (e.button) {
                 // ie browser
-                if(e.button === 2) {
+                if (e.button === 2) {
                     rightClick = true;
-                } else if(e.button === 1) {
+                } else if (e.button === 1) {
                     leftClick = true;
-                } else if(e.button === 3) {
+                } else if (e.button === 3) {
                     rightClick = true;
                     leftClick = true;
-                } else if(e.button === 4) {
+                } else if (e.button === 4) {
                     centerClick = true;
                 }
 
             }
 
-            if(centerClick === true || leftClick === true) {
+            if (centerClick === true || leftClick === true) {
                 var el = keyToArray(e.target ? e.target.id : e.srcElement.id);
 
                 elementsManager.markElements([
@@ -179,30 +182,30 @@
 
             if (e.which) {
                 // normal browser
-                if(e.which === 3) {
+                if (e.which === 3) {
                     rightClick = false;
                     clicked = 'right';
-                } else if(e.which === 1) {
+                } else if (e.which === 1) {
                     leftClick = false;
                     clicked = 'left';
-                } else if(e.which === 2) {
+                } else if (e.which === 2) {
                     centerClick = false;
                     clicked = 'bouth';
                 }
 
             } else if (e.button) {
                 // ie browser
-                if(e.button === 2) {
+                if (e.button === 2) {
                     rightClick = false;
                     clicked = 'right';
-                } else if(e.button === 1) {
+                } else if (e.button === 1) {
                     leftClick = false;
                     clicked = 'left';
-                } else if(e.button === 3) {
+                } else if (e.button === 3) {
                     rightClick = false;
                     leftClick = false;
                     clicked = 'bouth';
-                } else if(e.button === 4) {
+                } else if (e.button === 4) {
                     centerClick = false;
                     clicked = 'bouth';
                 }
@@ -224,7 +227,7 @@
                 el = e.srcElement.id;
             }
 
-            switch(clicked) {
+            switch (clicked) {
                 case 'left':
                     showBomb(el);
                     showMarked(el);
@@ -279,9 +282,15 @@
             tableElement.appendChild(tbody);
 
             var i, j;
-            var falseFunc = function () { return false; };
-            var downFunc = function (e) { eventDown(e); };
-            var upFunc = function (e) { eventUp(e); };
+            var falseFunc = function () {
+                return false;
+            };
+            var downFunc = function (e) {
+                eventDown(e);
+            };
+            var upFunc = function (e) {
+                eventUp(e);
+            };
             for (i = 0; i < xSize; i++) {
                 var tr = document.createElement('tr');
                 tr.onclick = falseFunc;
@@ -317,11 +326,11 @@
 
                     var element = elementsManager.getElement(key);
 
-                    if(element.getModified()) {
+                    if (element.getModified()) {
                         //console.log(key);
                         var htmlElement = document.getElementById(key);
                         htmlElement.className = element.getStatus();
-                        if(element.isBomb === false && element.neighbours > 0 && element.getStatus() === 'empty') {
+                        if (element.isBomb === false && element.neighbours > 0 && element.getStatus() === 'empty') {
                             htmlElement.innerHTML = element.neighbours.toString();
                         }
                         element.resetModified();
@@ -338,20 +347,22 @@
             removeInterval(interval);
 
             var tds = canvasElement.getElementsByTagName('td');
-            var i,j;
-            var falseFunc = function () { return false; };
+            var i, j;
+            var falseFunc = function () {
+                return false;
+            };
             for (i = 0; i < tds.length; i++) {
                 tds[i].onmousedown = falseFunc;
                 tds[i].onmouseup = falseFunc;
             }
 
             // display exploded bombs
-            for(i = 0; i < xSize; i++) {
-                for(j = 0; j < ySize; j++) {
+            for (i = 0; i < xSize; i++) {
+                for (j = 0; j < ySize; j++) {
                     var key = arrayToKey(i, j);
 
                     var el = elementsManager.getElement(key);
-                    if(el.isBomb === true) {
+                    if (el.isBomb === true) {
                         el.setStatus('exploded');
                     }
                 }
@@ -370,17 +381,17 @@
             // check elements that are not bombs and are new or marked
             var i, j;
             finishedLoop:
-                for(i = 0; i < xSize; i++) {
-                    for(j = 0; j < ySize; j++) {
+                for (i = 0; i < xSize; i++) {
+                    for (j = 0; j < ySize; j++) {
                         var el = elementsManager.getElement(arrayToKey(i, j));
-                        if(el.isBomb === false && (el.getStatus() === 'new' || el.getStatus() === 'marked')) {
+                        if (el.isBomb === false && (el.getStatus() === 'new' || el.getStatus() === 'marked')) {
                             finish = false;
                             break finishedLoop;
                         }
                     }
                 }
 
-            if(finish === true) {
+            if (finish === true) {
                 finished();
             }
         };
@@ -390,11 +401,11 @@
             removeInterval();
 
             var i, j;
-            for(i = 0; i < xSize; i++) {
-                for(j = 0; j < ySize; j++) {
+            for (i = 0; i < xSize; i++) {
+                for (j = 0; j < ySize; j++) {
                     var el = elementsManager.getElement(arrayToKey(i, j));
-                    if(el.getStatus() === 'new') {
-                        if(el.isBomb === true) {
+                    if (el.getStatus() === 'new') {
+                        if (el.isBomb === true) {
                             el.setStatus('marked');
                             nrBombsMarked++;
                         } else {
@@ -469,8 +480,8 @@
 
             var resetMarked = function () {
                 var key;
-                for(key in marked) {
-                    if(marked.hasOwnProperty(key)) {
+                for (key in marked) {
+                    if (marked.hasOwnProperty(key)) {
                         document.getElementById(marked[key]).style.borderColor = '';
                     }
                 }
@@ -516,8 +527,7 @@
                 if (element === undefined || element.isBomb === true || element.getStatus() === 'marked') {
                     return;
                 }
-
-
+                
                 element.setStatus('empty');
 
                 if (element.neighbours === 0) {
@@ -530,8 +540,8 @@
 
             var clearEmptyNeighbourElements = function (key) {
 
-                if(empty.indexOf(key) !== -1) {
-                    return ;
+                if (empty.indexOf(key) !== -1) {
+                    return;
                 }
 
                 empty.push(key);
@@ -597,7 +607,7 @@
 
                     var i, j, key;
                     for (i = 0; i < xSize; i++) {
-                        for(j = 0; j < ySize; j++) {
+                        for (j = 0; j < ySize; j++) {
                             key = arrayToKey(i, j);
                             elements[key] = Object.create(ElementPrototype());
                         }
@@ -612,7 +622,7 @@
 
                     var keys = [];
                     for (i = 0; i < xSize; i++) {
-                        for(j = 0; j < ySize; j++) {
+                        for (j = 0; j < ySize; j++) {
                             key = arrayToKey(i, j);
                             keys.push(key);
                         }
@@ -623,7 +633,7 @@
                         var rand = Math.round(Math.random() * (keys.length - 1));
                         if (hotKeys.indexOf(keys[rand]) !== -1) {
                             i--;
-                            continue ;
+                            continue;
                         }
                         elements[keys[rand]].isBomb = true;
                         keys[rand] = keys[keys.length - 1];
@@ -632,7 +642,7 @@
 
                     // nr of neighbours
                     for (key in elements) {
-                        if(elements.hasOwnProperty(key)) {
+                        if (elements.hasOwnProperty(key)) {
                             elements[key].neighbours = getNeighbourNumber(key);
                             var domElement = document.getElementById(key);
                             domElement.style.color = getTextColor(elements[key].neighbours);
@@ -641,7 +651,7 @@
 
                 },
                 getElement: function (key) {
-                    if(elements[key] !== undefined) {
+                    if (elements[key] !== undefined) {
                         return elements[key];
                     }
 
@@ -649,8 +659,8 @@
                 },
                 markElements: function (keys) {
                     var key;
-                    for(key in keys) {
-                        if(keys.hasOwnProperty(key)) {
+                    for (key in keys) {
+                        if (keys.hasOwnProperty(key)) {
                             markElement(keys[key]);
                         }
                     }
@@ -658,7 +668,7 @@
                 resetMarked: function () {
                     resetMarked();
                 },
-                getMarkedNumber: function  (key) {
+                getMarkedNumber: function (key) {
                     return getMarkedNumber(key);
                 },
                 isElementBomb: function (key) {
@@ -686,8 +696,8 @@
             var hideMenus = function () {
                 var option;
                 menuContainer.style.display = 'none';
-                for(option in options) {
-                    if(options.hasOwnProperty(option)) {
+                for (option in options) {
+                    if (options.hasOwnProperty(option)) {
                         options[option].style.display = 'none';
                     }
                 }
@@ -726,13 +736,13 @@
                 inGame = false;
                 menuManager.displayMenu('Start fresh?', 'reset');
             },
-            pause: function() {
+            pause: function () {
 
-                if(!inGame) {
+                if (!inGame) {
                     return;
                 }
 
-                if(interval) {
+                if (interval) {
                     removeInterval();
                     tableElement.style.visibility = 'hidden';
                     pauseScreen.style.display = 'block';
@@ -766,7 +776,7 @@
     };
 
     var setCustomValues = function () {
-        if(arguments.length) {
+        if (arguments.length) {
             var xValue = arguments[0];
             var yValue = arguments[1];
             var minesValue = arguments[2];
@@ -804,7 +814,7 @@
     var startGameWithOptions = function () {
         var dataSet = this.dataset;
 
-        if(dataSet.x && dataSet.y && dataSet.bombs) {
+        if (dataSet.x && dataSet.y && dataSet.bombs) {
             setCustomValues(dataSet.x, dataSet.y, dataSet.bombs);
         } else {
             setCustomValues();
@@ -819,11 +829,11 @@
 
 
     document.getElementById('option-custom').onclick = function () {
-        document.getElementById('custom-options').style.display='block';
+        document.getElementById('custom-options').style.display = 'block';
     };
 
     document.getElementById('custom-options-cancel').onclick = function () {
-        document.getElementById('custom-options').style.display='none';
+        document.getElementById('custom-options').style.display = 'none';
     };
 
     document.getElementById('reset').onclick = function () {
@@ -833,7 +843,7 @@
     window.onload = function () {
         var values = getLevelValues();
 
-        if(values.x && values.y && values.bombs) {
+        if (values.x && values.y && values.bombs) {
             resetGame();
         }
     };
