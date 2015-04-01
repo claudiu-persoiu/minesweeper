@@ -21,8 +21,7 @@
             seconds = 0;
             counterElement.innerHTML = '0:00';
             try {
-                clearInterval(interval);
-                interval = null;
+                removeInterval();
             } catch(e) {}
 
             elementsManager.resetElements();
@@ -45,6 +44,11 @@
         var initInterval = function () {
             interval = setInterval(function () { step(); }, 1000);
         };
+
+        var removeInterval = function () {
+            clearInterval(interval);
+            interval = null;
+        }
 
         var step = function () {
             ++seconds;
@@ -331,7 +335,7 @@
 
         var gameOver = function () {
 
-            clearInterval(interval);
+            removeInterval(interval);
 
             var tds = canvasElement.getElementsByTagName('td');
             var i,j;
@@ -383,7 +387,7 @@
 
         var finished = function () {
 
-            clearInterval(interval);
+            removeInterval();
 
             var i, j;
             for(i = 0; i < xSize; i++) {
@@ -681,7 +685,6 @@
 
             var hideMenus = function () {
                 var option;
-                menuContainer.className = '';
                 menuContainer.style.display = 'none';
                 for(option in options) {
                     if(options.hasOwnProperty(option)) {
@@ -719,8 +722,7 @@
                 startGame();
             },
             reset: function () {
-                clearInterval(interval);
-                interval = null;
+                removeInterval();
                 inGame = false;
                 menuManager.displayMenu('Start fresh?', 'reset');
             },
@@ -731,19 +733,17 @@
                 }
 
                 if(interval) {
-                    clearInterval(interval);
-                    interval = null;
-                    tableElement.style.display = 'none';
+                    removeInterval();
+                    tableElement.style.visibility = 'hidden';
                     pauseScreen.style.display = 'block';
                     pauseImage.className = 'play';
                     return true;
                 } else {
                     initInterval();
-                    tableElement.style.display = '';
+                    tableElement.style.visibility = 'visible';
                     pauseScreen.style.display = 'none';
                     pauseImage.className = 'pause';
                     return false;
-
                 }
 
             }

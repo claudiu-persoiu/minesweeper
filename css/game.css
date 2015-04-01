@@ -130,18 +130,6 @@ a, a:active {
     color: #FFFFFF;
 }
 
-#pause-screen {
-    width: 100%;
-    height: 200px;
-    vertical-align: middle;
-    line-height: 200px;;
-    text-align: center;
-    font-size: 40px;
-    color: #cccccc;
-    display: none;
-    cursor: pointer;
-}
-
 .custom-option {
     width: 200px;
     margin: 0 auto;
