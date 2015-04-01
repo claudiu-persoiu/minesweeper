@@ -327,7 +327,6 @@
                     var element = elementsManager.getElement(key);
 
                     if (element.getModified()) {
-                        //console.log(key);
                         var htmlElement = document.getElementById(key);
                         htmlElement.className = element.getStatus();
                         if (element.isBomb === false && element.neighbours > 0 && element.getStatus() === 'empty') {
@@ -527,7 +526,7 @@
                 if (element === undefined || element.isBomb === true || element.getStatus() === 'marked') {
                     return;
                 }
-                
+
                 element.setStatus('empty');
 
                 if (element.neighbours === 0) {
@@ -546,8 +545,7 @@
 
                 empty.push(key);
 
-                var i;
-                var neighborKeys = getNeighborKeys(key);
+                var i, neighborKeys = getNeighborKeys(key);
 
                 for (i = 0; i < neighborKeys.length; i++) {
                     clearEmptyElement(neighborKeys[i]);
