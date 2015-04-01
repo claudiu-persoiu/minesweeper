@@ -750,21 +750,17 @@
         };
     }());
 
-    var level = (function () {
-
+    var getLevelValues = function () {
         return {
-            getValues: function () {
-                return {
-                    x: parseInt(localStorage.getItem('mines-x'), 10),
-                    y: parseInt(localStorage.getItem('mines-y'), 10),
-                    bombs: parseInt(localStorage.getItem('mines-elements'), 10)
-                }
-            }
-        };
-    }());
+            x: parseInt(localStorage.getItem('mines-x'), 10),
+            y: parseInt(localStorage.getItem('mines-y'), 10),
+            bombs: parseInt(localStorage.getItem('mines-elements'), 10)
+        }
+    };
+
 
     var resetGame = function () {
-        var values = level.getValues();
+        var values = getLevelValues();
         Game.startGame(values.x, values.y, values.bombs);
         return false;
     };
@@ -835,7 +831,7 @@
     };
 
     window.onload = function () {
-        var values = level.getValues();
+        var values = getLevelValues();
 
         if(values.x && values.y && values.bombs) {
             resetGame();
