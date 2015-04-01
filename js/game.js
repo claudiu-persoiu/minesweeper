@@ -471,19 +471,16 @@
 
             var markElement = function (key) {
                 if (elements[key] !== undefined && elements[key].getStatus() === 'new') {
-                    document.getElementById(key).style.borderColor = '#9D9392';
-                    marked.push(key);
+                    var htmlElement = document.getElementById(key);
+                    htmlElement.style.borderColor = '#9D9392';
+                    marked.push(htmlElement);
                 }
-
             };
 
             var resetMarked = function () {
-                var key;
-                for (key in marked) {
-                    if (marked.hasOwnProperty(key)) {
-                        document.getElementById(marked[key]).style.borderColor = '';
-                    }
-                }
+                marked.forEach(function (element) {
+                    element.style.borderColor = '';
+                });
                 marked = [];
             };
 
