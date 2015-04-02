@@ -51,7 +51,7 @@
         var removeInterval = function () {
             clearInterval(interval);
             interval = null;
-        }
+        };
 
         var step = function () {
             ++seconds;
@@ -350,6 +350,7 @@
             var falseFunc = function () {
                 return false;
             };
+
             for (i = 0; i < tds.length; i++) {
                 tds[i].onmousedown = falseFunc;
                 tds[i].onmouseup = falseFunc;
@@ -485,15 +486,9 @@
             };
 
             var getNeighbourNumber = function (key) {
-                var i, nr = 0;
-
-                var neighborKeys = getNeighborKeys(key);
-
-                for (i = 0; i < neighborKeys.length; i++) {
-                    nr += isElementBomb(neighborKeys[i]);
-                }
-
-                return nr;
+                return getNeighborKeys(key).filter(function (neighbor) {
+                    return isElementBomb(neighbor);
+                }).length;
             };
 
             var isElementMarked = function (key) {
@@ -536,11 +531,9 @@
 
                 empty.push(key);
 
-                var i, neighborKeys = getNeighborKeys(key);
-
-                for (i = 0; i < neighborKeys.length; i++) {
-                    clearEmptyElement(neighborKeys[i]);
-                }
+                getNeighborKeys(key).forEach(function (neighbor) {
+                    clearEmptyElement(neighbor);
+                });
 
                 return true;
             };
@@ -558,17 +551,10 @@
             };
 
             var getMarkedNeighborsCorrect = function (key) {
-                var i, marked = 0;
 
-                var neighborKeys = getNeighborKeys(key);
-
-                for (i = 0; i < neighborKeys.length; i++) {
-                    marked += isNotCorrectBomb(neighborKeys[i]);
-                }
-
-                // if marked is 0 then is all elements are marked correct
-                return marked ? false : true;
-
+                return !getNeighborKeys(key).filter(function (neighbor) {
+                    return isNotCorrectBomb(neighbor);
+                }).length;
             };
 
             var getNeighborKeys = function (key) {
@@ -647,12 +633,9 @@
                     return false;
                 },
                 markElements: function (keys) {
-                    var key;
-                    for (key in keys) {
-                        if (keys.hasOwnProperty(key)) {
-                            markElement(keys[key]);
-                        }
-                    }
+                    keys.forEach(function (key) {
+                        markElement(key);
+                    });
                 },
                 resetMarked: function () {
                     resetMarked();
@@ -685,6 +668,7 @@
             var hideMenus = function () {
                 var option;
                 menuContainer.style.display = 'none';
+
                 for (option in options) {
                     if (options.hasOwnProperty(option)) {
                         options[option].style.display = 'none';
@@ -757,7 +741,6 @@
         }
     };
 
-
     var resetGame = function () {
         var values = getLevelValues();
         Game.startGame(values.x, values.y, values.bombs);
@@ -765,18 +748,20 @@
     };
 
     var setCustomValues = function () {
+        var xValue, yValue, minesValue;
+
         if (arguments.length) {
-            var xValue = arguments[0];
-            var yValue = arguments[1];
-            var minesValue = arguments[2];
+            xValue = arguments[0];
+            yValue = arguments[1];
+            minesValue = arguments[2];
         } else {
             var x = document.getElementById('x');
             var y = document.getElementById('y');
             var mines = document.getElementById('mines');
 
-            var xValue = x.options[x.selectedIndex].value;
-            var yValue = y.options[y.selectedIndex].value;
-            var minesValue = mines.options[mines.selectedIndex].value;
+            xValue = x.options[x.selectedIndex].value;
+            yValue = y.options[y.selectedIndex].value;
+            minesValue = mines.options[mines.selectedIndex].value;
         }
 
         localStorage.setItem('mines-x', xValue);
