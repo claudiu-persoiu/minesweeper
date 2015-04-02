@@ -157,7 +157,7 @@
             if (centerClick === true || leftClick === true) {
                 var el = keyToArray(e.target ? e.target.id : e.srcElement.id);
 
-                elementsManager.markElements([
+                elementsManager.highlightElements([
                     arrayToKey(el.x - 1, el.y - 1),
                     arrayToKey(el.x - 1, el.y),
                     arrayToKey(el.x - 1, el.y + 1),
@@ -240,7 +240,7 @@
                     break;
             }
 
-            elementsManager.resetMarked();
+            elementsManager.resetHighlight();
 
             checkFinished();
 
@@ -470,7 +470,7 @@
                 return elements[key] !== undefined && elements[key].isBomb;
             };
 
-            var markElement = function (key) {
+            var highlightElement = function (key) {
                 if (elements[key] !== undefined && elements[key].getStatus() === 'new') {
                     var htmlElement = document.getElementById(key);
                     htmlElement.style.borderColor = '#9D9392';
@@ -478,7 +478,7 @@
                 }
             };
 
-            var resetMarked = function () {
+            var resetHighlight = function () {
                 marked.forEach(function (element) {
                     element.style.borderColor = '';
                 });
@@ -632,13 +632,13 @@
 
                     return false;
                 },
-                markElements: function (keys) {
+                highlightElements: function (keys) {
                     keys.forEach(function (key) {
-                        markElement(key);
+                        highlightElement(key);
                     });
                 },
-                resetMarked: function () {
-                    resetMarked();
+                resetHighlight: function () {
+                    resetHighlight();
                 },
                 getMarkedNumber: function (key) {
                     return getMarkedNumber(key);
