@@ -11,8 +11,6 @@
         var counterElement = document.getElementById('counter');
         var seconds;
         var tableElement = null;
-        var pauseScreen = document.getElementById('pause-screen');
-        var pauseImage = document.getElementById('pause-image');
         var inGame = false;
 
         var statusElement = document.getElementById('status');
@@ -26,8 +24,6 @@
             }
 
             elementsManager.resetElements();
-
-            pauseScreen.style.display = 'none';
 
             menuManager.hide();
 
@@ -423,10 +419,6 @@
 
         };
 
-        var translucentCanvas = function () {
-            canvasElement.className = 'translucent';
-        };
-
         // method for creating objects
         var ElementPrototype = function () {
             var modified = false;
@@ -659,11 +651,17 @@
 
             var menuContainer = document.getElementById('menu-screen');
             var messageContainer = document.getElementById('menu-message');
+            var pauseScreen = document.getElementById('pause-screen');
+            var pauseImage = document.getElementById('pause-image');
+
             var options = [];
             options['reset'] = document.getElementById('reset-options');
             options['type'] = document.getElementById('type-options');
             options['custom'] = document.getElementById('custom-options');
 
+            var translucentCanvas = function () {
+                canvasElement.className = 'translucent';
+            };
 
             var hideMenus = function () {
                 var option;
@@ -681,6 +679,7 @@
                 messageContainer.innerHTML = message;
                 options[menu].style.display = 'block';
                 menuContainer.style.display = 'block';
+                pauseScreen.style.display = 'none';
 
                 translucentCanvas();
             };
@@ -691,6 +690,14 @@
                 },
                 displayMenu: function (message, menu) {
                     displayMenu(message, menu);
+                },
+                pauseOn: function () {
+                    pauseScreen.style.display = 'block';
+                    pauseImage.className = 'play';
+                },
+                pauseOff: function () {
+                    pauseScreen.style.display = 'none';
+                    pauseImage.className = 'pause';
                 }
             };
         }());
@@ -717,15 +724,13 @@
 
                 if (interval) {
                     removeInterval();
-                    tableElement.style.visibility = 'hidden';
-                    pauseScreen.style.display = 'block';
-                    pauseImage.className = 'play';
+                    canvasElement.style.visibility = 'hidden';
+                    menuManager.pauseOn();
                     return true;
                 } else {
                     initInterval();
-                    tableElement.style.visibility = 'visible';
-                    pauseScreen.style.display = 'none';
-                    pauseImage.className = 'pause';
+                    canvasElement.style.visibility = 'visible';
+                    menuManager.pauseOff();
                     return false;
                 }
 
