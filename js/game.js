@@ -286,12 +286,7 @@
             var falseFunc = function () {
                 return false;
             };
-            var downFunc = function (e) {
-                eventDown(e);
-            };
-            var upFunc = function (e) {
-                eventUp(e);
-            };
+
             for (i = 0; i < xSize; i++) {
                 var tr = document.createElement('tr');
                 tr.onclick = falseFunc;
@@ -305,8 +300,8 @@
                     td.className = 'new';
 
                     td.onclick = falseFunc;
-                    td.onmousedown = downFunc;
-                    td.onmouseup = upFunc;
+                    td.onmousedown = eventDown;
+                    td.onmouseup = eventUp;
                     td.ondblclick = falseFunc;
                     td.oncontextmenu = falseFunc;
                     td.setAttribute("unselectable", "on");
