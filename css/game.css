@@ -67,6 +67,14 @@ a, a:active {
     background: url("../media/sprite.jpg") 0 0;
 }
 
+.mark-explode {
+    background: url("../media/bomb.png");
+}
+
+.mark-flag {
+    background: url("../media/flag.png");
+}
+
 #canvas.translucent {
     opacity: 0.3;
     filter: alpha(opacity=30);
@@ -90,6 +98,13 @@ a, a:active {
 
 #reset div {
     background: url("../media/button-sprite.png") 0 0;
+    width: 25px;
+    height: 26px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#switch-action div {
     width: 25px;
     height: 26px;
     display: inline-block;

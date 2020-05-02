@@ -12,6 +12,7 @@
         var seconds;
         var tableElement = null;
         var inGame = false;
+        var markMode = false;
 
         var statusElement = document.getElementById('status');
 
@@ -225,7 +226,11 @@
 
             switch (clicked) {
                 case 'left':
-                    showBomb(el);
+                    if (markMode && interval) {
+                        markBomb(el);
+                    } else {
+                        showBomb(el);
+                    }
                     showMarked(el);
                     break;
                 case 'right':
@@ -734,6 +739,9 @@
                     return false;
                 }
 
+            },
+            toggleMode: function () {
+                return markMode = !markMode;
             }
         };
     }());
@@ -780,6 +788,14 @@
             Game.pause();
         };
     });
+
+    document.getElementById('switch-action').onclick = function () {
+        if (Game.toggleMode()) {
+            document.getElementById('switch-action').getElementsByTagName("div")[0].className = "mark-flag";
+        } else {
+            document.getElementById('switch-action').getElementsByTagName("div")[0].className = "mark-explode";
+        }
+    };
 
     document.getElementById('new-game').onclick = function () {
         resetGame();
