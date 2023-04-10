@@ -182,3 +182,14 @@ a, a:active {
     padding-top: 20px;
     font-style: italic;
 }
+
+#fork {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+}
+
+.ml5 {
+    margin-left: 5px;
+}
