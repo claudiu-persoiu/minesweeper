@@ -193,3 +193,11 @@ a, a:active {
 .ml5 {
     margin-left: 5px;
 }
+
+#fork-img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 149px;
+    height: 149px;
+}
