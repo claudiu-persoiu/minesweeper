@@ -1,5 +1,5 @@
 # minesweeper
 
-Check it out at: http://claudiu-persoiu.github.io/minesweeper/
+Check it out at: https://claudiu-persoiu.github.io/minesweeper/
 
 A JavaScript Minesweeper clone
