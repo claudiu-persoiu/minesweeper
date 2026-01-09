@@ -57,7 +57,6 @@
         }());
         const elementsManager = (function () {
 
-
             let elements;
             const clearEmptyElement = function (key) {
 
@@ -88,20 +87,6 @@
                 });
 
                 return true;
-            };
-            const getNeighborKeys = function (key) {
-                const el = keyToArray(key);
-
-                return [
-                    arrayToKey(el.x - 1, el.y - 1),
-                    arrayToKey(el.x - 1, el.y),
-                    arrayToKey(el.x - 1, el.y + 1),
-                    arrayToKey(el.x, el.y - 1),
-                    arrayToKey(el.x, el.y + 1),
-                    arrayToKey(el.x + 1, el.y - 1),
-                    arrayToKey(el.x + 1, el.y),
-                    arrayToKey(el.x + 1, el.y + 1)
-                ];
             };
 
             let marked = [];
@@ -254,6 +239,20 @@
         };
         const arrayToKey = function (x, y) {
             return 'e' + x + 'x' + y;
+        };
+        const getNeighborKeys = function (key) {
+            const el = keyToArray(key);
+
+            return [
+                arrayToKey(el.x - 1, el.y - 1),
+                arrayToKey(el.x - 1, el.y),
+                arrayToKey(el.x - 1, el.y + 1),
+                arrayToKey(el.x, el.y - 1),
+                arrayToKey(el.x, el.y + 1),
+                arrayToKey(el.x + 1, el.y - 1),
+                arrayToKey(el.x + 1, el.y),
+                arrayToKey(el.x + 1, el.y + 1)
+            ];
         };
         const finished = function () {
 
@@ -452,18 +451,9 @@
             }
 
             if (centerClick === true || leftClick === true) {
-                const el = keyToArray(e.target ? e.target.id : e.srcElement.id);
+                const key = e.target ? e.target.id : e.srcElement.id;
 
-                elementsManager.highlightElements([
-                    arrayToKey(el.x - 1, el.y - 1),
-                    arrayToKey(el.x - 1, el.y),
-                    arrayToKey(el.x - 1, el.y + 1),
-                    arrayToKey(el.x, el.y - 1),
-                    arrayToKey(el.x, el.y + 1),
-                    arrayToKey(el.x + 1, el.y - 1),
-                    arrayToKey(el.x + 1, el.y),
-                    arrayToKey(el.x + 1, el.y + 1)
-                ]);
+                elementsManager.highlightElements(getNeighborKeys(key));
             }
 
             return false;
